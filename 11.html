@@ -1,0 +1,171 @@
+<html>
+    <head>
+        <tile>全局组件slot应用</tile>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+        <style>
+            *{
+                padding: 0%;
+                margin: 0%;
+            }
+
+            .main{
+                width: 100%;
+            }
+
+            .header{
+                width: 100%;
+                height: 180px;
+                background-color: purple;
+            }
+
+            .container{
+                width: 100%;
+                height: 1000px;   
+            }
+
+            .container .aside{
+                float:left;
+                width:30%;
+                height: 100%;
+                background-color: goldenrod
+            }
+
+            .container .content{
+                float:right;
+                width:70%;
+                height: 100%;
+                background-color:gray;
+            }
+
+            .foot{
+                width:100%;
+                height:80px;
+                background-color:maroon;
+            }
+
+            .default{
+                display: inline-block;
+                line-height: 1;
+                white-space: nowrap;
+                cursor: pointer;
+                background: #fff;
+                border: 1px solid #dcdfe6;
+                color: #606266;
+                -webkit-appearance: none;
+                text-align: center;
+                box-sizing: border-box;
+                outline: none;
+                margin: 0;
+                transition: .1s;
+                font-weight: 500;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                padding: 12px 20px;
+                font-size: 14px;
+                border-radius: 4px;
+            }
+
+            .success{
+                color: #fff;
+                background-color: #67c23a;
+                border-color: #67c23a;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="app">
+           
+        </div>
+        
+        <script type="text/javascript">
+          Vue.component('Vbtn',{
+              //3.使用父组件传入的参数
+              template:'<button :class="btnClass"><slot></slot></button>',
+              data(){
+                  return {
+
+                  }
+              },
+              //2.子组件自定义接收父组件的参数
+              props:['btnClass']
+          })
+
+        
+
+           var Vheader = {
+               //3.子组件定义点击事件处理内容
+               template: `
+                <div class='header'>
+                    我是头
+                    <!--1. 父组件自定义属性传入子组件 -->
+                    <Vbtn :btnClass='activeClass'>登录</Vbtn>
+                </div>
+               `,
+               data(){
+                 return {
+                     activeClass:"default"
+                 }
+               },
+               methods:{
+                    
+               }
+           }
+
+           var Vcontent = {
+               template: "<div class='content'>我是内容</div>"
+           }
+
+           var Vside = {
+               template: "<div class='aside'>我是侧边栏<Vbtn :btnClass='activeClass'>播放</Vbtn></div>",
+               data(){
+                   return {
+                       activeClass:"success"
+                   }
+               }
+           }
+
+           var Vfoot = {
+               template: "<div class='foot'>我是底部</div>"
+           }
+
+            var App = {
+                //1.父模板声明自定义事件changeFront，并指定处理方法changeFrontHandle
+                template:'<div class="main"><Vheader></Vheader><div class="container"><Vcontent></Vcontent><Vside/></div><Vfoot/></div>',
+                data(){
+                    return {
+                        
+                    }
+                },
+                
+                components:{
+                    Vheader:Vheader,
+                    Vcontent,
+                    Vside,
+                    Vfoot
+                },
+                methods:{
+                    
+                }
+            };
+
+            new Vue({
+                el:"#app",
+                //3.使用
+                template:'<App></App>',
+                data(){
+                    return {
+                    }
+                },
+                methods:{
+                },
+                //2.挂载
+                components:{
+                    App
+                }
+            });
+        </script>
+    </body>
+</html>

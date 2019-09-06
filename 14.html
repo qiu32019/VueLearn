@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>复杂属性watch的使用方法</title>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id='app'></div>
+        <script type="text/javascript">
+        
+        new Vue({
+            el: '#app',
+            template:`
+                <div>
+                    <!-- <input type='text' v-model:value='msg'/><br/> -->
+                   
+                    {{students[0].name}}
+                    <button @click='students[0].name="jerry"'>改变</button>
+                    <button @click='change'>改变2</button>
+                </div>
+            `,
+            data(){
+                return {
+                    students: [{name:"tom"}]  
+                }
+            },
+            watch:{
+                //复杂数据 对象，数组 类型的监听
+                students:{
+                    deep: true,
+                    handler: function(newV, oldV){
+                        // debugger, oldV 显示不出来不知道为什么
+                        console.log(newV[0].name, oldV[0].name);
+                        // console.log(newV, oldV);
+                    } 
+                }
+            },
+            methods:{
+                change(){
+                    this.students[0].name=Math.random();
+                }
+            }
+        });
+        </script>
+    </body>
+</html>

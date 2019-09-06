@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>watch的使用方法</title>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id='app'></div>
+        <script type="text/javascript">
+        
+        new Vue({
+            el: '#app',
+            template:`
+                <div>
+                    <!-- <input type='text' v-model:value='msg'/><br/> -->
+                    <input type='text' v-model='msg'/><br/>
+
+                    {{msg}}
+                </div>
+            `,
+            data(){
+                return {
+                  msg:'多一点点'  
+                }
+            },
+            watch:{
+                msg:function(newValue, oldValue){
+                    console.log(newValue, oldValue);
+                }
+            }
+        });
+        </script>
+    </body>
+</html>

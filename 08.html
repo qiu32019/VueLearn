@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <tile>布局组件应用</tile>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+        <style>
+            *{
+                padding: 0%;
+                margin: 0%;
+            }
+
+            .main{
+                width: 100%;
+            }
+
+            .header{
+                width: 100%;
+                height: 80px;
+                background-color: purple;
+            }
+
+            .container{
+                width: 100%;
+                height: 1000px;   
+            }
+
+            .container .aside{
+                float:left;
+                width:30%;
+                height: 100%;
+                background-color: goldenrod
+            }
+
+            .container .content{
+                float:right;
+                width:70%;
+                height: 100%;
+                background-color:gray;
+            }
+
+            .foot{
+                width:100%;
+                height:80px;
+                background-color:maroon;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="app">
+           
+        </div>
+        
+        <script type="text/javascript">
+          //1.声明全局组件
+          Vue.component("Vbtn",{
+              template: "<button>全局按钮</button>"
+          })
+
+          //1.声明局部组件
+           var Vheader = {
+               template: "<div class='header'>我是头<Vbtn/></div>"
+           }
+
+           var Vcontent = {
+               template: "<div class='content'>我是内容<Vbtn/></div>"
+           }
+
+           var Vside = {
+               template: "<div class='aside'>我是侧边栏<Vbtn/></div>"
+           }
+
+           var Vfoot = {
+               template: "<div class='foot'>我是底部<Vbtn/></div>"
+           }
+
+           //1.声明
+            var App = {
+                //3.使用局部组件
+                template:"<div class='main'><Vheader></Vheader><div class='container'><Vcontent></Vcontent><Vside/></div><Vfoot/></div>",
+                data(){
+                    return {
+
+                    }
+                },
+                //2.挂载局部组件
+                components:{
+                    Vheader:Vheader,
+                    Vcontent,
+                    Vside,
+                    Vfoot
+                }
+            };
+
+            new Vue({
+                el:"#app",
+                //3.使用
+                template:'<App></App>',
+                data(){
+                    return {
+                    }
+                },
+                methods:{
+                },
+                //2.挂载
+                components:{
+                    App
+                }
+            });
+        </script>
+    </body>
+</html>

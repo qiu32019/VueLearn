@@ -1,0 +1,53 @@
+<html>
+    <head>
+            <title>逻辑运算语法糖</title>
+            <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div v-if="isShow">Hello World</div>
+            <div v-show="isDisplay">Show Time</div>
+            <div v-if="Math.random()>0.5">
+                大于0.5
+            </div>
+            <div v-else-if="Math.random()==0.5">
+                等于0.5
+            </div>
+            <div v-else="Math.random()<0.5">
+                小于 0.5
+            </div>
+
+           
+            <div v-for="(item,index) in products" v-bind:key="item.id">
+                <ul>
+                    <li>{{item.id}}</li>    
+                    <li>{{item.name}}</li>    
+                    <li>{{item.price}}</li>   
+                </ul> 
+            </div>
+           
+            <div v-for="(value, key, index) in Obj">
+               {{index}}:: {{key}}----{{value}}
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+            new Vue({
+                el: "#app",
+                template: '',
+                data: function(){
+                    return {
+                        isShow: false,
+                        isDisplay: false,
+                        products: [
+                            {id:1, name:"apple", price:5450},
+                            {id:2, name:"xiaomi", price:2960},
+                            {id:3, name:"huawei", price:3200},
+                        ],
+                        Obj: {name:"蜡笔小新", age:3}
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

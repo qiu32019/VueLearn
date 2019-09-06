@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <tile>父子组件通信</tile>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+        <style>
+            *{
+                padding: 0%;
+                margin: 0%;
+            }
+
+            .main{
+                width: 100%;
+            }
+
+            .header{
+                width: 100%;
+                height: 180px;
+                background-color: purple;
+            }
+
+            .container{
+                width: 100%;
+                height: 1000px;   
+            }
+
+            .container .aside{
+                float:left;
+                width:30%;
+                height: 100%;
+                background-color: goldenrod
+            }
+
+            .container .content{
+                float:right;
+                width:70%;
+                height: 100%;
+                background-color:gray;
+            }
+
+            .foot{
+                width:100%;
+                height:80px;
+                background-color:maroon;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="app">
+           
+        </div>
+        
+        <script type="text/javascript">
+        
+
+         
+           var Vheader = {
+               //4.在模版中使用传递过来的自定义的属性
+               template: "<div class='header'>我是头 <h3>{{ msg }}</h3> <br/><div v-for='item in books'><ul><li>{{item.name}}</li></ul></div></div>",
+               //3.子组件定义props接收父组件传递过来的自定义属性
+               props:['msg','books']
+           }
+
+           var Vcontent = {
+               template: "<div class='content'>我是内容</div>"
+           }
+
+           var Vside = {
+               template: "<div class='aside'>我是侧边栏</div>"
+           }
+
+           var Vfoot = {
+               template: "<div class='foot'>我是底部</div>"
+           }
+
+           //1.声明需要传递的属性信息msg, books
+            var App = {
+                //2.在模版中绑定需要传递的自定义属性到指定的子组件
+                template:"<div class='main'><Vheader :msg='msg' :books='books'></Vheader><div class='container'><Vcontent></Vcontent><Vside/></div><Vfoot/></div>",
+                data(){
+                    return {
+                        msg:'父组件传值到子组件',
+                        books:[
+                            {id:1, name:"射雕英雄传"},
+                            {id:2, name:"神雕侠侣"},
+                            {id:3, name:"倚天屠龙记"},
+                        ]
+                    }
+                },
+                
+                components:{
+                    Vheader:Vheader,
+                    Vcontent,
+                    Vside,
+                    Vfoot
+                }
+            };
+
+            new Vue({
+                el:"#app",
+                //3.使用
+                template:'<App></App>',
+                data(){
+                    return {
+                    }
+                },
+                methods:{
+                },
+                //2.挂载
+                components:{
+                    App
+                }
+            });
+        </script>
+    </body>
+</html>

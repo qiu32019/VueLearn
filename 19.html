@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>Vue的生命周期函数测试, keep-alive 缓存组件</title>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <!--
+            Vue的生命周期函数测试
+            beforeCreate
+            created
+            beforeMount
+            mounted
+            beforeUpdate
+            updated
+            activated
+            deactivated
+            beforeDestroy
+            destroyed
+            errorCaptured
+        -->
+        <div id="app">
+              <App></App>
+        </div>
+        <script>
+            //注意：Lifecycle-> LifeCycle 如果用驼峰，会导致在页面引用组件的时候找不到组件，但是在入口组件中引入子子组件不会有问题
+            var Lifecycle = {
+                template:`
+                    <div id="2">
+                        <input type="text" v-model="msg"><br/>
+                        {{msg}}    
+                    </div>
+                `,
+                data(){
+                    return {
+                        msg: 'Hello World'
+                    }
+                },
+                beforeCreate(){
+                    console.log('beforeCreate::'+this.msg);
+                },
+                created(){
+                    //在created方法中可以操作后端的数据，数据响应视图
+                    //应用: 发起Ajax请求
+                    console.log('created::'+this.msg);
+                    //this.msg='改变值';
+                },
+                beforeMount(){
+                    //挂载dom之前调用
+                    console.log('beforeMount::'+this.msg);
+                    console.log(document.getElementById('app'));
+                },
+                mounted(){
+                    console.log('mounted::'+this.msg);
+                    console.log(document.getElementById('app'));
+                },
+                beforeUpdate(){
+                    console.log('beforeUpdate::'+this.msg);
+                    console.log(document.getElementById("app").innerHTML);
+                },
+                updated(){
+                    console.log('updated::'+this.msg);
+                    console.log(document.getElementById("app").innerHTML);
+                },
+                activated(){
+                    console.log('activated::'+this.msg);
+                },
+                deactivated(){
+                    console.log('deactivated::'+this.msg);
+                },
+                beforeDestroy(){
+                    console.log('beforeDestroy::'+this.msg);
+                },
+                destroyed(){
+                    console.log('destroyed::'+this.msg);
+                }
+            }
+
+            var App={
+                template:`
+                    <div id="1">
+                        <keep-alive>
+                        <Lifecycle v-if='isShow'></Lifecycle>
+                        </keep-alive>
+                        <button @click="isShow=!isShow">显示|关闭</button>
+                    </div>
+                `,
+                data(){
+                    return {
+                        isShow:true
+                    }
+                },
+                components:{
+                    Lifecycle
+                }
+            }
+
+            
+
+            new Vue({
+                el: '#app',
+                template:``,
+                components:{
+                    App
+                }
+            });
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <tile>双向数据绑定及实现原理</tile>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model:value="msg"><br>
+            <h2>{{msg}}</h2><br>
+            <input type="text" v-bind:value="msg2" v-on:input='inputStr'><br>
+            <h2>{{msg2}}</h2><br>
+        </div>
+        
+        <script type="text/javascript">
+            new Vue({
+                el:"#app",
+                template:'',
+                data(){
+                    return {
+                        msg:'',
+                        msg2:''
+                    }
+                },
+                methods:{
+                    inputStr(e){
+                        console.log(e.target.value);
+                        this.msg2 = e.target.value;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

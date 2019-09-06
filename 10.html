@@ -1,0 +1,121 @@
+<html>
+    <head>
+        <tile>子组件像父组件传递消息</tile>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+        <style>
+            *{
+                padding: 0%;
+                margin: 0%;
+            }
+
+            .main{
+                width: 100%;
+            }
+
+            .header{
+                width: 100%;
+                height: 180px;
+                background-color: purple;
+            }
+
+            .container{
+                width: 100%;
+                height: 1000px;   
+            }
+
+            .container .aside{
+                float:left;
+                width:30%;
+                height: 100%;
+                background-color: goldenrod
+            }
+
+            .container .content{
+                float:right;
+                width:70%;
+                height: 100%;
+                background-color:gray;
+            }
+
+            .foot{
+                width:100%;
+                height:80px;
+                background-color:maroon;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="app">
+           
+        </div>
+        
+        <script type="text/javascript">
+        
+
+           var Vheader = {
+               //3.子组件定义点击事件处理内容
+               template: "<div class='header'>我是头<button @click='changeFront'>改变字体大小</button></div>",
+               methods:{
+                    changeFront(e){
+                       console.log(this);
+                       //4.子组件向父容器发送自定义事件消息
+                       this.$emit('changeFront');
+                    }
+               }
+           }
+
+           var Vcontent = {
+               template: "<div class='content'>我是内容</div>"
+           }
+
+           var Vside = {
+               template: "<div class='aside'>我是侧边栏</div>"
+           }
+
+           var Vfoot = {
+               template: "<div class='foot'>我是底部</div>"
+           }
+
+            var App = {
+                //1.父模板声明自定义事件changeFront，并指定处理方法changeFrontHandle
+                template:'<div class="main" :style=\'{fontSize:postFontSize+"em"}\'><Vheader @changeFront="changeFrontHandle"></Vheader><div class="container"><Vcontent></Vcontent><Vside/></div><Vfoot/></div>',
+                data(){
+                    return {
+                        postFontSize:1
+                    }
+                },
+                
+                components:{
+                    Vheader:Vheader,
+                    Vcontent,
+                    Vside,
+                    Vfoot
+                },
+                methods:{
+                    changeFrontHandle(){
+                        //2.修改入口容器定义属性
+                        this.postFontSize+=0.5;
+                    }
+                }
+            };
+
+            new Vue({
+                el:"#app",
+                //3.使用
+                template:'<App></App>',
+                data(){
+                    return {
+                    }
+                },
+                methods:{
+                },
+                //2.挂载
+                components:{
+                    App
+                }
+            });
+        </script>
+    </body>
+</html>

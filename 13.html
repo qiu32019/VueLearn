@@ -1,0 +1,38 @@
+<html>
+    <head>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="number" v-model:value="price"><br/>
+            {{price | currency}}<br/>
+            {{msg | myReverse('翻转')}}<br/>
+        </div>
+        <script type="text/javascript">
+            //全局过滤器
+            Vue.filter('myReverse',function(value,args){
+                return args+":::"+value.split('').reverse().join('');
+            });
+
+            new Vue({
+                el: '#app',
+                template: '',
+                data(){
+                    return {
+                        price:0,
+                        msg:"Hello World"
+                    }
+                },
+                //局部过滤器
+                filters:{
+                    currency(value){
+                        if(value){
+                            return '¥'+value;
+                        }
+                        return '';
+                    }
+                }
+            });    
+        </script>
+    </body>
+</html>

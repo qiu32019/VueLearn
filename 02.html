@@ -1,0 +1,27 @@
+<html>
+ <head>
+    <title>插值方式字符串，对象，表达式</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+ </head>
+ <body>
+     <div id="app">
+         字符串: {{ msg }}<br>
+         对象: {{ {name:"tom"} }}<br>
+         布尔值: {{1==1}}<br>
+         三元表达式: {{ 1==1?'yes':'no'}}
+     </div>
+     <script type="text/javascript">
+     
+        new Vue({
+            el: "#app",
+            template: '', 
+            data(){
+                return {
+                    msg:'我的第一个Vue1'
+                }
+            }
+        });
+     
+    </script>
+ </body>
+</html>

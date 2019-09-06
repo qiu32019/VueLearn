@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <tile>父子组件应用</tile>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+           
+        </div>
+        
+        <script type="text/javascript">
+           //1.声明
+            var App = {
+                template:"<div>我是入口组件</div>",
+                data(){
+                    return {
+
+                    }
+                }
+            };
+
+            new Vue({
+                el:"#app",
+                //3.使用
+                template:'<App></App>',
+                data(){
+                    return {
+                    }
+                },
+                methods:{
+                },
+                //2.挂载
+                components:{
+                    App
+                }
+            });
+        </script>
+    </body>
+</html>

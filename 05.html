@@ -1,0 +1,44 @@
+<html>
+    <head>
+            <title>绑定属性以及事件处理</title>
+            <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+            <style>
+                .co{
+                    color: blue
+                }
+                .active{
+                    color:red
+                }
+            </style>
+    </head>
+    <body>
+        <div id="app">
+                <div class="co" v-bind:class="active">变色</div>
+                <div class="co" v-bind:class="{active:isActive}">isActive为真，active作为字符串加入class属性中</div>
+                <div :class="'active'">直接赋值</div>
+
+                <button v-on:click="changeColor">改变颜色</button>
+                <button v-on:click="isActive=!isActive">改变颜色</button>isActive:::{{isActive}}
+        </div>
+        
+        <script type="text/javascript">
+           new Vue({
+                el:"#app",
+                template:'',
+                data(){
+                    return {
+                        active:"",
+                        isActive:false
+                    }
+                },
+                methods:{
+                    changeColor(e){
+                        console.log(this);//template整个挂载点
+                        console.log(e);//button对象
+                        this.active="active";
+                    }
+                }
+           });
+        </script>
+    </body>
+</html>

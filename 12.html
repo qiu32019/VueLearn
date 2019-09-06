@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript">
+            
+            Vue.component('MySlot1',{
+                template:`
+                    <li>
+                       <slot></slot>
+                    </li>
+                `,
+                data(){
+                    return {
+
+                    }
+                }
+            });
+
+            Vue.component('MySlot2',{
+                template:`
+                    <li>
+                        预留的第一个坑
+                        <slot name="one"></slot>
+                        预留的第二个坑
+                        <slot name="two"></slot>
+                    </li>
+                `,
+                data(){
+                    return {
+
+                    }
+                }
+            });
+
+            Vue.component('Vbtn1',{
+                template: `
+                    <button @click="del"><slot></slot></button>
+                `,
+                methods: {
+                    del(){
+                        alert(1)
+                    }
+                }
+            });
+
+            Vue.component('Vbtn2',{
+                template: `
+                    <button><slot></slot></button>
+                `/* ,
+                methods: {
+                    add(){
+                        alert(1)
+                    }
+                } */
+            });
+
+
+            
+            new Vue({
+                el:"#app",
+                template:`
+                    <div>
+                        <ul>
+                            <MySlot2>
+                                <h2 slot="two">张三</h2>
+                                <h3 slot="one">王五</h3>
+                            </MySlot2>   
+                            <MySlot1>
+                                <h2>李四</h2>
+                            </MySlot1>  
+                        </ul>
+                        <Vbtn1>删除1</Vbtn1><br/>
+                        <!-- 使用了子组件，定义的方法在父组件中，则需要使用native -->
+                        <Vbtn2 @click.native='add'>删除2</Vbtn2>
+                    </div>
+                `,
+                data(){
+                    return {
+
+                    }
+                },
+                methods:{
+                    add(){
+                        alert('2')
+                    }
+                }
+            });    
+        </script>
+    </body>
+</html>

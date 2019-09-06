@@ -1,0 +1,22 @@
+<html>
+ <head>
+    <title>感受第一个Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+ </head>
+ <body>
+     <div id="app"></div>
+     <script type="text/javascript">
+     
+        new Vue({
+            el: "#app",
+            template: '<div>{{msg}}</div>', 
+            data: function(){
+                return {
+                    msg:'我的第一个Vue'
+                }
+            }
+        });
+     
+    </script>
+ </body>
+</html>

@@ -1,0 +1,66 @@
+<html>
+    <head>
+         <title>computed计算属性 的getter与setter使用方法</title>
+         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+         <style>
+             .active{
+                 background-color:yellow
+             }
+         </style>
+    </head>
+    <body>
+        <div id="app">
+            <audio :src="getCurrentSonSrc" autoplay controls></audio>
+            <ul>
+            <div v-for="(item,index) in songs" v-bind:key='item.id'>
+                <!--2种写法-->
+                <!--currentIndex==index?'active':''-->
+                <!--{active:currentIndex==index}-->
+               <li :class="{active:currentIndex==index}" @click='change(index)'> {{item.id}}~~~ {{item.src}}</li>
+            </div>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            var songs = [
+                {id: '1', name: '歌曲1', src: './static/song1.mp3'},
+                {id: '2', name: '歌曲2', src: './static/song2.mp3'},
+                {id: '3', name: '歌曲3', src: './static/song3.mp3'}
+            ]
+
+            new Vue({
+                el: "#app",
+                template: ``,
+                data(){
+                    return {
+                        songs: songs,
+                        currentIndex:0
+                    }
+                },
+                methods:{
+                    change(index){
+                        //console.log(index);
+                        //this.currentIndex = index;
+                        this.getCurrentSonSrc = index;
+                    }
+                },
+                computed:{
+                    // getCurrentSonSrc(){
+                    //     return this.songs[this.currentIndex].src;
+                    // }
+                    //getter setter
+                    getCurrentSonSrc:{
+                        set:function(value){
+                            console.log("setter value is: "+value);
+                            this.currentIndex = value;
+                        },
+                        get:function(){
+                            console.log("getter return value is: " + this.songs[this.currentIndex].src);
+                            return this.songs[this.currentIndex].src;
+                        }
+                    }
+                }
+                
+            });
+        </script>
+    </body>
+</html>
