@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Vue提供的获取组件的方法</title>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript">
+            var SubComponent = {
+                template:`
+                    <div id="subDiv"><h2>子组件</h2></div>
+                `
+            }
+
+            Vue.component("SubCom",SubComponent);
+
+            var App = {
+                template:`
+                    <div>
+                        <button ref='btn1'>我是第一个按钮</button>
+                        <button ref='btn2'>我是第二个按钮</button>
+                        <SubCom ref='SubCom'></SubCom>
+                    </div>
+                `,
+                beforeCreate(){
+                    console.log("beforeCreate");
+                    console.log(this.$refs.btn1);
+                },
+                created(){
+                    console.log("created");
+                    console.log(this.$refs.btn1);
+                },
+                mounted(){
+                    console.log("mounted");
+                    console.log(this.$refs.btn1);//绑定的是Dom
+                    console.log(this.$refs.btn2);//绑定的是Dom
+                    console.log(this.$refs.SubCom);//绑定的是组件本身
+
+                    //console.log(this.$refs);
+                }
+
+            }
+            
+            new Vue({
+                el: "#app",
+                template:`
+                    <App></App>
+                `,
+                data(){
+                    return {
+
+                    }
+                },
+                components:{
+                    App
+                }
+
+            });
+        </script>
+    </body>
+</html>

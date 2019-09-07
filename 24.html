@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <!--安装vue router-->
+        <!--
+            1.npm init --yes
+            2.npm install vue-router --save
+        -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+        <script type="text/javascript" src="./node_modules/vue-router/dist/vue-router.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript">
+        
+        //1.在Vue中使用VueRouter
+        Vue.use(VueRouter);
+     
+        var Login = {
+            template:`<div>我是登录页面</div>`
+        }
+
+        var Register = {
+            template:`<div>我是注册页面</div>`
+        }
+
+        //2.初始化VueRouter组件
+        var router = new VueRouter({
+            routes:[
+                {
+                    path:'/login',
+                    name:'login',
+                    component:Login
+                },
+                {
+                    path:'/registry',
+                    name:'register',
+                    component:Register
+                }
+            ]
+        })
+
+        //3. 使用全局组件`router-link`,`router-view`
+        var App = {
+            template:`
+                <div>
+                   <nav>
+                    <!--path绑定方案-->
+                    <!--
+                     <router-link to='/login'>登录</router-link>
+                     <router-link to='/registry'>注册</router-link>
+                     -->
+                     <!--name绑定方案-->
+                     <router-link :to="{name:'login'}">登录</router-link>
+                     <router-link :to="{name:'register'}">注册</router-link>
+                   </nav>
+                   
+                     <router-view></router-view>
+                </div>
+            `
+        }
+
+        new Vue({
+            el:"#app",
+            template:`<App></App>`,
+            data(){
+                return {
+
+                }
+            },
+            components:{
+              App
+            },
+            router:router//vue.js:1897 TypeError: Cannot read property 'matched' of undefined
+        });
+
+        </script>
+    </body>
+</html>

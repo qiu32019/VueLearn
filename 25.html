@@ -1,0 +1,65 @@
+<html>
+    <head>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+            <script type="text/javascript" src="./node_modules/vue-router/dist/vue-router.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript">
+          //1.声明使用VueRouter
+          Vue.use(VueRouter);
+
+          var UserP={
+              template:`<div>我是第一个用户</div>`
+          }
+          var UserQ={
+              template:`<div>我是第二个用户</div>`
+          }
+
+          //2.实例化VueRouter
+          var router = new VueRouter({
+              routes:[
+                  {
+                      path:'/userp/:id',
+                      name:'userP',
+                      component: UserP
+                  },
+                  {
+                      path:'/userq',
+                      name:'userQ',
+                      component: UserQ
+                  }
+              ]
+          });
+
+          var App = {
+              // 使用公共组件router-link, router-view
+              template:`
+              <div>
+                 <nav>
+                   <router-link :to='{name:"userP",params:{id:1}}'>用户一</router-link>
+                   <router-link :to='{name:"userQ",query:{id:2}}'>用户二</router-link>
+                 </nav>
+                
+                 <router-view></router-view>
+              </div>
+              `,
+          }
+          
+          new Vue({
+             el:'#app',
+             template:`<App></App>`,
+             data(){
+                 return {
+
+                 }
+             },
+             components:{
+                App
+             },
+             //3.挂载VueRouter
+             router:router
+          });
+        </script>
+    </body>
+</html>

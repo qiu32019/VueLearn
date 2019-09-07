@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>常规页面切换,锚点变更内容变化</title>
+    </head>
+    <body>
+        <a href="#/login">登录</a>
+        <a href="#/registry">注册</a>
+       <div id="app">
+
+       </div>
+
+        <script type="text/javascript">
+          var app = document.getElementById("app");
+          window.onhashchange = function(){
+              console.log(location.hash);
+              switch(location.hash){
+                  case '#/login':
+                      app.innerHTML='<h2>登录页面</h2>';
+                      break;
+                  case '#/registry':
+                      app.innerHTML='<h2>注册页面</h2>';
+                      break;
+                  default:
+                      app.innerHTML = '<h2>默认的页面<h2>';
+              }
+          }
+        </script>
+    </body>
+</html>
