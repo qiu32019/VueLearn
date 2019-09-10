@@ -39,7 +39,7 @@
             ]
         })
 
-        //3. 使用全局组件`router-link`,`router-view`
+        //4. 使用全局组件`router-link`,`router-view`
         var App = {
             template:`
                 <div>
@@ -70,6 +70,7 @@
             components:{
               App
             },
+            //3.挂载router
             router:router//vue.js:1897 TypeError: Cannot read property 'matched' of undefined
         });
 

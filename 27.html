@@ -1,0 +1,97 @@
+<html>
+    <head>
+            <title>动态路由</title>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+            <script type="text/javascript" src="./node_modules/vue-router/dist/vue-router.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script type="text/javascript">
+           
+           Vue.use("VueRouter");
+
+           var Home = {
+               template:`
+               <div>
+                  <router-link :to='{name:"android",params:{id:"android"}}'>安卓</router-link>
+                  <router-link :to='{name:"apple",params:{id:"apple"}}'>苹果</router-link>
+                  <router-view></router-view>
+               </div>
+               `
+           }
+
+           var ComDesc = {
+               template:`
+                  <div>
+                     {{msg}}
+                  </div>
+               `,
+               data(){
+                   return {
+                       msg: ''
+                   }
+               },
+               created(){
+                   console.log("created()...");
+                   this.msg = "安卓";
+               },
+               watch:{
+                   '$route'(to, from){
+                       console.log(to)
+                       console.log(from)
+                       this.msg = this.$route.params.id
+                   }
+               }
+           }
+
+           var router = new VueRouter({
+                routes:[
+                    {
+                        path: '/Home',
+                        name: 'home',
+                        component: Home,
+                        children:[
+                            {
+                                path: '/Home/android/:id',
+                                name: 'android',
+                                component: ComDesc
+                            },
+                            {
+                                path: '/Home/apple/:id',
+                                name: 'apple',
+                                component: ComDesc
+                            }
+                        ]
+                    }
+                ]
+
+           });
+           
+           var App = {
+               template:`
+               <div>
+                 <router-link :to='{name:"home"}'>首页</router-link>
+
+                 <router-view></router-view>
+               </div>
+               `
+           }
+
+           new Vue({
+               el: '#app',
+               template: `<App></App>`,
+               data(){
+                   return {
+
+                   }
+               },
+               components:{
+                   App
+               },
+               router: router
+
+           });
+        </script>
+    </body>
+</html>

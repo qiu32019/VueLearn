@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>嵌套路由</title>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+            <script type="text/javascript" src="./node_modules/vue-router/dist/vue-router.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript">
+          Vue.use("VueRouter");
+
+          var Home = {
+              template: `
+                <div>
+                我是首页<br>
+                <router-link :to='{name:"song"}'>歌曲</router-link>
+                <router-link :to='{name:"movie"}'>电影</router-link>
+                <router-view></router-view>
+                </div>
+              `
+          }
+
+          var Song = {
+              template: `<div>我是歌曲</div>`,
+              created(){
+                  console.log(this.$route);
+              }
+          }
+
+          var Movie = {
+              template: `<div>我是电影</div>`
+          }
+
+          var router = new VueRouter({
+            routes:[
+                {
+                    path:'/home',
+                    name:'home',
+                    //components: Home //TypeError: Cannot create property '_Ctor' on string '<div>我是首页</div>'
+                    component: Home,
+                    children:[   
+                            {
+                                path:'song',
+                                name:'song',
+                                component: Song                                
+                            },
+                            {
+                                path:'movie',
+                                name:'movie',
+                                component: Movie
+                            }
+                     
+                    ]
+                }
+            ]    
+          });
+
+          /* var router = new VueRouter({
+              routes:[
+                  {
+                      path:'/home',
+                      name:'home',
+                      component: Home
+                  }
+              ]
+          }); */
+
+          var App = {
+              template: `
+              <div>
+                <router-link :to='{name:"home"}'>首页</router-link>
+                <router-view></router-view>
+              </div>
+              `
+          }
+
+          new Vue({
+              el: "#app",
+              template:`<App></App>`,
+              data(){
+                  return {
+
+                  }
+              },
+              components:{
+                  App:App
+              },
+              //vue.js:1897 TypeError: Cannot read property 'matched' of undefined
+              router:router
+          });
+        </script>
+        
+    </body>
+</html>

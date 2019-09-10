@@ -10,10 +10,18 @@
           Vue.use(VueRouter);
 
           var UserP={
-              template:`<div>我是第一个用户</div>`
+              template:`<div>我是第一个用户</div>`,
+              created(){
+                console.log(this.$route);
+                console.log(this.$router);
+              }
           }
           var UserQ={
-              template:`<div>我是第二个用户</div>`
+              template:`<div>我是第二个用户</div>`,
+              created(){
+                console.log(this.$route);
+                console.log(this.$router);
+              }
           }
 
           //2.实例化VueRouter
