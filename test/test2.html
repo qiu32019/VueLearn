@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue生命周期测试</title>
+    <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- <keep-alive> -->
+            <!-- 屬於active生命周期 -->
+        <App v-if="isShow"></App>
+        <!-- </keep-alive> -->
+        <!-- 不加keep-alive 則屬於destroy範圍生命周期 -->
+        <!-- <App v-if="isShow"></App> -->
+        <button @click="isShow=!isShow">百變生死</button>
+    </div>
+
+    <script>
+        var App = {
+            template: `
+                <div id="app">
+                    {{msg}}
+                    <button @click="changeHandle">改变内容</button>
+                    <button @click="active=!active">隱藏</button>
+                    <keep-alive>
+                        <div v-show="active">
+                            <a href="#">百度</a>
+                        </div>
+                    </keep-alive>
+                </div>
+            `,
+            data() {
+                return {
+                    msg: "Vue生命周期测试",
+                    active: false
+                }
+            },
+            methods: {
+                changeHandle() {
+                    this.msg = this.msg.split('').reverse().join('');
+                }
+            },
+            beforeCreate() {
+                //组件创建之前
+                console.log("beforeCreate: " + this.msg);
+            },
+            created() {
+                //组件创建之后
+                //这个方法中可以发起Ajax请求获取后端数据
+                console.log("created: " + this.msg);
+                this.msg = "改变了内容";
+            },
+            beforeMount() {
+                //挂载数据到dom之前
+                console.log("beforeMount: ");
+                console.log(document.getElementById("root"));
+            },
+            mounted() {
+                //挂载数据到dom之后，可以操作Dom    
+                console.log("mounted: ");
+                console.log(document.getElementById("root"));
+            },
+            beforeUpdate() {
+                console.log("beforeUpdate");
+                console.log(document.getElementById("root").innerHTML);
+            },
+            updated() {
+                console.log("updated")
+                console.log(document.getElementById("root").innerHTML);
+            },
+            activated() {
+                console.log("activated");
+            },
+            deactivated() {
+                console.log("deactivated");
+            },
+            beforeDestroy() {
+                console.log("beforeDestroy");
+            },
+            destroyed() {
+                console.log("destroyed");
+            }
+        }
+
+        var vm = new Vue({
+            el: '#root',
+            //template:`<div id="root1"><App></App></div>`,
+            template: ``,
+            components: {
+                App
+            },
+            data(){
+                return {
+                  isShow:true
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

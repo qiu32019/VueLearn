@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="../node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+  <div id="app">
+    <router-link to="/home">首页</router-link>
+    <router-link to="/pins">沸点</router-link>
+    <router-view></router-view>
+  </div>
+
+  <script>
+      Vue.use(VueRouter);
+
+      var BusinessCard = {
+        template:`
+          <div>
+            <div>persons::::{{persons}}</div>
+            <div>
+              <label>姓名:</label>{{persons[msg]['name']}}  
+            </div>
+          </div>
+        `,
+        created(){
+          //console.log(1)
+          //这个不能省略，第一次进来时，还没有开始监听$route对象，下面的watch方法会失效，导致错误
+          this.msg = this.$route.params.id;
+        },
+        data(){
+          return {
+            msg:""
+          }
+        },
+        props:[
+          "persons"
+        ],
+        watch:{
+          $route(to, from){
+            //console.log(this.$route);
+            //this.msg = this.$route.params.id;
+            //console.log(persons);
+            // console.log(to);
+            this.msg = to.params.id;
+          }
+        }
+      }
+
+      var Others={
+        template:`
+          <div>
+            我是沸点: {{msg}}
+          </div>
+        `,
+        data(){
+          return {
+            msg:""
+          }
+        },
+        watch:{
+          $route(to, from){
+              console.log("to is:");
+              console.log(to);
+              console.log("from is:");
+              console.log(from);
+              this.msg = from.query.id;
+          }
+        },
+        created(){
+          //console.log(this.$route)
+          this.msg = this.$route.query.id;
+        }
+      }
+
+      var Home = {
+        template:`<div id="home">
+           <router-link :to="{name:'one', params:{id:'0'}}">第一个</router-link>
+           <router-link :to="{name:'one', params:{id:'1'}}">第二个</router-link>
+           <router-view :persons="persons1"></router-view>
+          </div>`,
+        data(){
+          return {
+            persons1:[ 
+              {name:"明台"},
+              {name:"明清"}
+            ]
+          }
+        }
+      }
+
+      var Pins = {
+        template:`<div id="pins">
+            <router-link :to="{name:'two', query:{id:'0'}}">F1</router-link>
+            <router-link :to="{name:'two', query:{id:'1'}}">F2</router-link>
+            <router-view></router-view>
+          </div>`
+      }
+
+      var router = new VueRouter({
+          routes:[
+            {
+              path:"/home",
+              component:Home,
+              children:[
+                {
+                  path:"one/:id",
+                  name:"one",
+                  component:BusinessCard
+                }
+              ]
+            },
+            {
+              path:"/pins",
+              component:Pins,
+              children:[
+                {
+                  path:"two",
+                  name:"two",
+                  component:Others
+                }
+              ]
+            }
+          ]
+      });
+
+      new Vue({
+        el:"#app",
+        template:``,
+        router,
+        data(){
+          return {
+            msg:'测试一把'
+          }
+        }
+      });
+
+  </script>
+</body>
+</html>

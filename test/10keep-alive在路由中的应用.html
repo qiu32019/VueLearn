@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="../node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+
+  <script>
+    Vue.use(VueRouter);
+
+    var App = {
+      template:`
+      <div>
+        <router-link to="/series">栏目</router-link>
+        <router-link to="/topics">主题</router-link>
+
+        <!--包括在keep alive中或不在其中，其生命周期不一樣-->
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
+        
+      </div>
+      `
+    }
+
+    var Series = {
+      template:`<div>我是栏目</div>`,
+      created(){
+        console.log("Series created");
+      },
+      mounted(){
+        console.log("Series mounted");
+      },
+      destroyed(){
+        console.log("Series destroyed");
+      }
+    }
+
+    var Topics = {
+      template:`<div><a href="javascript:void(0);" @click="changeColor">我是主题</a></div>`,
+      methods:{
+        changeColor(e){
+          e.target.style.color="red";
+        }
+      },
+      created(){
+        console.log("Topics created");
+      },
+      mounted(){
+        console.log("Topics mounted");
+      },
+      destroyed(){
+        console.log("Topics destroyed");
+      }
+    }
+
+    var router = new VueRouter({
+        routes:[
+          {
+            path:"/series",
+            component:Series
+          },
+          {
+            path:"/topics",
+            component:Topics
+          }
+        ]
+    });
+
+    new Vue({
+       el: "#app",
+       template: '<App></App>',
+       //Unknown custom element: <App> - did you register the component correctly? For recursive components, make sure to provide the "name" option.
+       components: {
+         App
+       },
+       router
+    });
+
+    
+
+    
+  </script>
+</body>
+</html>

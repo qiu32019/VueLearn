@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="../node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <router-link to="/home">首页</router-link>
+    <router-link to="/feidian">沸点</router-link>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    Vue.use(VueRouter);
+
+    var Home = {
+      template:`<div>
+        <router-link to="/home/android">安卓</router-link>
+        <router-link to="/home/ios">苹果</router-link>
+        <router-view></router-view>
+        </div>`
+    }
+
+    var FeiDian = {
+      template:`<div>我是沸点</div>`
+    }
+
+    var Android = {
+      template:`<div>安卓</div>`
+    }
+
+    var IOS = {
+      template:`<div>苹果</div>`
+    }
+
+    var router = new VueRouter({
+      routes: [
+          {
+            path:"/home",
+            component:Home,
+            children:[
+                  { path:"android", component:Android},
+                  { path:"ios", component:IOS}
+            ]
+          },
+          {
+            path:"/feidian",
+            component:FeiDian
+          }
+      ]
+    });
+
+    new Vue({
+      el: `#app`,
+      template: ``,
+      router,
+      data() {
+        return {
+          msg: '测试一把'
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

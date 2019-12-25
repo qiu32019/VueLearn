@@ -1,0 +1,61 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="../node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <router-link to="/timeline">首页</router-link>
+    <router-link :to="{name:'feidian'}">沸点</router-link>
+    <router-view></router-view>
+  </div>
+
+  <script>
+
+    //vue.js:1897 TypeError: Cannot read property 'matched' of undefined
+    Vue.use(VueRouter);
+
+    var TimeLine = {
+      template: `<div>我是首页</div>`
+    }
+
+    var FeiDian = {
+      template: `<div>我是沸点</div>`
+    }
+
+    var router = new VueRouter({
+      routes: [
+        {
+          path: "/timeline",
+          component: TimeLine
+        },
+        {
+          path: "/feidian",
+          name:"feidian",
+          component: FeiDian
+        }
+      ]
+    });
+
+
+
+    new Vue({
+      el: '#app',
+      template: ``,
+      router,
+      data() {
+        return {
+
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="D:\Scott\vue-learn\node_modules\vue\dist\vue.js"></script>
+    <style>
+        ul li{
+           list-style: none; 
+        }
+        
+        .active{
+            background-color: blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+        var App = {
+            template:`
+                <div>
+                    <div>{{msg}}</div>
+                    <div>{{sources[currentIndex].imagePath}}</div>
+                    <div>
+                        <ul>
+                            <li v-for='(item, index) in sources' v-bind:key='item.id' :class="{active:currentIndex==index}" @click='change(index)'>
+                            {{item.id}}:{{item.name}}<image :src='item.imagePath'/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            data: function(){
+                return {
+                    msg:'测试一把',
+                    currentIndex: 0,
+                    sources:[
+                        {id:1, name:'张三',age:19, imagePath:'F:/image/brnn_paixing_1.png'},
+                        {id:2, name:'李四',age:18, imagePath:'F:/image/brnn_paixing_3.png'},
+                        {id:4, name:'赵六',age:19, imagePath:'F:/image/brnn_paixing_4.png'},
+                    ]
+                }
+            },
+            methods:{
+                change(index){
+                    console.log(index);
+                    this.currentIndex = index;
+                }
+            },
+            computed:{
+                getCurrentIndex(){
+                    return currentIndex;
+                }
+            }
+        }
+        
+
+        new Vue({
+            el:"#app",
+            template:'<App></App>',
+            components:{
+                App
+            }
+        });
+    </script>
+</body>
+</html>
