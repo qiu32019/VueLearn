@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <form>
+    采购余额:<span id="balance"> 100元</span>
+    <div class="page a">
+      部门A:<input type="text">
+      <button class="add" id="sdf">+</button>
+      <button class="sub">-</button>
+    </div></div>
+    <div class="page b">
+      部门B:<input type="text">
+      <button class="add" id="adsf">+</button>
+      <button class="sub">-</button>
+    </div>
+  </form>
+  <div class="foo"></div>
+  <script>
+    var balance = 0;
+
+    console.log(document.querySelector(".foo"));
+    init();
+
+    function init(){
+      //console.log(document.querySelector(".page.a .add"));
+      var a = new Division(".page.a");
+      var b = new Division(".page.b");
+    }
+
+    function Division(selector){
+      this.resource = new Resource();
+      var resource = this.resource;//非箭头函数绑定事件导致this对象变成了button
+      var selector = document.querySelector(selector);
+      var input = selector.querySelector("input");
+      var self = this;
+      //console.log(selector.querySelector(".add"));
+      selector.querySelector(".add").addEventListener("click", function(e){
+        e.preventDefault();
+        self.resource.add(input.value);
+        reload();
+      });
+      selector.querySelector(".sub").addEventListener("click", (e)=>{
+        e.preventDefault();
+        this.resource.sub(input.value);
+        reload();
+      });
+
+    }
+
+    function Resource(){
+      if(Resource.instance){
+        return Resource.instance;
+      }
+      this.balance = 100;
+      Resource.instance = this;
+    }
+
+
+    Resource.prototype.add= function(sum){
+      this.change(sum);
+    }
+
+    Resource.prototype.sub= function(sum){
+      this.change(-sum);
+    }
+
+    Resource.prototype.change= function(sum){
+      sum = parseFloat(sum);
+      if(!sum){
+        return;
+      }
+      console.log(this)
+      this.balance+=sum;
+    }
+    
+    function reload(){
+      var el = document.getElementById("balance");
+      var r3 = new Resource();
+      el.innerHTML = r3.balance;
+    }
+  </script>
+</head>
+<body>
+  
+</body>
+</html>
