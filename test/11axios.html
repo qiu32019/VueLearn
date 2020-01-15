@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="../node_modules/vue-router/dist/vue-router.js"></script>
+  <script type="text/javascript" src="../node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+  <div id="app">
+    
+  </div>
+
+  <script>
+    var App = {
+      template:`
+          <div>
+            {{msg}}
+          </div>
+        `,
+      data(){
+        return{
+          msg:"test"
+        }
+      }
+    }
+
+    new Vue({
+      el:"#app",
+      template:`<App></App>`,
+      data(){
+        return{
+        
+        }
+      },
+      components:{
+        App
+      }
+    });
+  </script>
+</body>
+</html>
