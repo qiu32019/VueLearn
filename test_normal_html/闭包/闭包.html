@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="myText"></div>
+  <button id="mybutton1">mybutton1</button>
+  <button id="mybutton2">mybutton2</button>
+  <button id="mybutton3">mybutton3</button>
+  <button id="mybutton4">mybutton4</button>
+  <script>
+    let countClicked = 0;
+    var myButton1 = document.getElementById("mybutton1");
+    var myButton2 = document.getElementById("mybutton2");
+    var myButton3 = document.getElementById("mybutton3");
+    var myButton4 = document.getElementById("mybutton4");
+    var buttons = [myButton1,myButton2,myButton3,myButton4];
+    var myText = document.getElementById("myText");
+    //不采用闭包
+    // for(var i=0,count=4; i<count; i++){
+    //   countClicked++;
+    //   buttons[i].addEventListener('click', function handleClick() {
+    //     myText.innerText = `You clicked ${countClicked} times`;
+    //   });
+    // }
+
+    //采用闭包1
+    // for(var i=0,count=4; i<count; i++){
+    //   buttons[i].addEventListener('click', function handleClick() {
+    //     countClicked++;
+    //     myText.innerText = `You clicked ${countClicked} times`;
+    //   });
+    // }
+
+    //采用闭包2
+    for(var i=0,count=4; i<count; i++){
+      (function(i){
+        buttons[i].addEventListener('click', function handleClick() {
+        countClicked++;
+        myText.innerText = `You clicked ${countClicked} times`;
+      });
+      })(i)
+    }
+
+    const message = 'Hello, World!';
+
+    setTimeout(function callback() {
+      console.log(message); // logs "Hello, World!"
+    }, 1000);
+
+    let countEven = 0;
+    const items = [1, 5, 100, 10];
+
+    items.forEach(function iterator(number) {
+      //debugger
+      if (number % 2 === 0) {
+        countEven++;
+      }
+    });
+
+    console.log(countEven,"countEven"); // => 2
+
+    function fn1(){
+      debugger
+      var a = 1;
+      function fn2(){
+        a++;
+        console.log(a);
+      }
+      return fn2;
+    }
+
+    fn1();
+  </script>
+</body>
+
+</html>

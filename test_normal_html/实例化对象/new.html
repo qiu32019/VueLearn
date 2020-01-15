@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //有多条逻辑生成一个对象，每实例一个对象，就要冗余大量代码
+    var person1 = new Object()
+    person1.name = "Jack";
+    person1.age = 18;
+    person1.setName = function(){
+      this.name = name;
+    }
+
+    console.log(person1.name, person1.age);
+    person1.setName("Bob");
+    console.log(person1.name, person1.age);
+
+    //虽然一条逻辑生成一个对象，但是生成多个对象时，代码也非常冗余
+    var person2 = {
+      name:"Jack2",
+      age:18,
+      setName:function(name){
+        this.name = name
+      }
+    }
+    console.log(person2.name, person2.age);
+    person2.setName("Bob2");
+    console.log(person2.name, person2.age);
+
+    //p3,p4 instanceOf Object分不清类型
+    function createPerson(name, age){
+       return {
+         name: name,
+         age: age,
+         setName: function(name){
+           this.name = name
+         }
+       }
+    }
+    var p3 = createPerson("Jack3",18);
+    var p4 = createPerson("Jack4",18);
+    console.log(p3);
+    console.log(p4);
+
+    //setName 在p5,p6中都有，浪费了内存
+    function Person(name, age){
+         this.name = name,
+         this.age =  age,
+         this.setName = function(name){
+           this.name = name
+         }
+    }
+    var p5 = new Person("Jack5",18);
+    p5.setName("Bob5");
+    console.log(p5);
+    var p6 = new Person("Jack6",18);
+    p5.setName("Bob6");
+    console.log(p6);
+
+    function Person2(name, age){
+      this.name= name
+      this.age = age
+    }
+    Person2.prototype.setName = function(name){
+      this.name = name;
+    }
+
+    var p7 = new Person2("Jack7",18);
+    p7.setName("Bob7");
+    console.log(p7)
+    
+  </script>
+</body>
+</html>
